@@ -14,9 +14,9 @@ def filter_by_state(data: list, state: Optional[str] = "EXECUTED") -> list:
     return needed_data
 
 
-def sort_by_date(data: list, reverse_option: Optional[bool] = True) -> list:
+def sort_by_date(data: list, reverse_option: bool = True) -> list:
     """
-    Функция, принимающая список словарей и необязательный параметр, задающий порядок сортировки (изначально по убыванию).
+    Функция, принимающая список словарей и опциональный параметр, задающий порядок сортировки (изначально по убыванию).
     Возвращает отсортированный список словарей.
     """
     sorted_data: list = sorted(data, key=lambda x: x["date"], reverse=reverse_option)
