@@ -151,7 +151,7 @@ def test_filter_by_currency_empty(empty: list, currency: str, expected_output: l
             "from": "Счет 44812258784861134719",
             "to": "Счет 74489636417521191160"
         }], ["Перевод организации", "Перевод со счета на счет", "Перевод со счета на счет"]),
-    [{
+    ([{
             "id": 594226727,
             "state": "CANCELED",
             "date": "2018-09-12T21:27:25.241689",
@@ -166,9 +166,10 @@ def test_filter_by_currency_empty(empty: list, currency: str, expected_output: l
             "from": "Visa Platinum 1246377376343588",
             "to": "Счет 14211924144426031657"
         }
-    ], ["Перевод организации"],
-    [], [],
+    ], ["Перевод организации"]),
+    ([], []),
     ])
 def test_transaction_descriptions(transaction: list, expected_output: list) -> None:
     generator = transaction_descriptions(transaction)
-    assert transaction_descriptions
+    assert list(generator) == expected_output
+
