@@ -11,36 +11,27 @@ def log(filename: Optional[str] = None) -> Callable:
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrapper(*args: object, **kwargs: object) -> Callable:
-            log_message: str = ""
+            log_message: str = f"Starting {func.__name__} with inputs: {args}, {kwargs}\n"
             try:
-                # логируем начало функции
-                log_message += f"Starting {func.__name__} with inputs: {args}, {kwargs}\n"
-
                 result: Callable = func(*args, **kwargs)
 
                 # логируем успешное выполнение
                 log_message += f"{func.__name__} ok\n"
 
-                # записываем в файл или консоль
+                return result
+            except Exception as error:
+                # информация об ошибке
+                log_message += f"{func.__name__} error: {type(error).__name__}. " f"Inputs: {args}, {kwargs}\n"
+
+                raise
+
+            finally:
+                # записываем в консоль
                 if filename:
                     with open(filename, "a") as file:
                         file.write(log_message)
                 else:
                     print(log_message, end="")
-
-                return result
-            except Exception as error:
-                # информация об ошибке
-                error_message = f"{func.__name__} error: {type(error).__name__}. " f"Inputs: {args}, {kwargs}\n"
-
-                # записываем в консоль
-                if filename:
-                    with open(filename, "a") as file:
-                        file.write(log_message + error_message)
-                else:
-                    print(log_message + error_message, end="")
-
-                raise
 
         return wrapper
 
