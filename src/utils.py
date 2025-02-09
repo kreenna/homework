@@ -13,14 +13,10 @@ def get_transactions(path_name: str) -> list:
         with open(os.path.join(PATH_HOME, path_name), "r", encoding="utf-8") as file:
             converted_data: list = json.load(file)
 
-        if not isinstance(converted_data, list):
+        if not isinstance(converted_data, list):  # проверяем, что файл в нужном формате
             return []
 
-    except Exception:
+    except Exception:  # любые ошибки с файлом
         return []
 
     return converted_data
-
-
-def get_ruble_transactions(transaction: list) -> list:
-    pass
