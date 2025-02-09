@@ -26,8 +26,9 @@ def get_ruble_transactions(transaction: dict) -> float:
                 headers: dict = {"apikey": API_KEY}
 
                 response = requests.get(url, headers=headers, params=payload)  # получаем ответ
+                result: float = response.json()["result"]
 
-                return response.json()["result"]
+                return result
 
             except Exception:
                 return 0
