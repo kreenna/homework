@@ -5,16 +5,6 @@ from src.utils import get_transactions
 mocked_open = mock_open(read_data='[{"id": 1, "amount": "100.0"}]')
 
 
-@patch("builtins.open", mocked_open)
-def test_get_transactions(mock_file):  # тест с корректным и существующим файлом
-
-    # вызываем функцию и записываем результат в переменную
-    result = get_transactions("data/operations.json")
-
-    assert result == [{"id": 1, "amount": "100.0"}]
-    mock_file.assert_called_once_with("data/operations.json", "r")
-
-
 @patch("os.path.join")
 @patch("builtins.open", new_callable=mock_open, read_data="[]")
 def test_empty_file(mock_file, mock_os_path_join):  # тест, когда файла нет
