@@ -1,10 +1,13 @@
 import logging
 
 # настройки логгера
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(filename)s - %(levelname)s: %(message)s',
-                    filename='../logs/masks.log',  # запись логов в файл
-                    filemode='w')  # перезапись файла при каждом запуске
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(filename)s - %(levelname)s: %(message)s",
+    filename="../logs/masks.log",  # запись логов в файл
+    filemode="w",
+)  # перезапись файла при каждом запуске
+
 
 def get_mask_card_number(number: str) -> str:
     """
@@ -13,13 +16,13 @@ def get_mask_card_number(number: str) -> str:
     """
     card_number = number.replace(" ", "")
 
-    logging.info(f'Проверяем, что номер карты {card_number} не короче 10 символов.')
+    logging.info(f"Проверяем, что номер карты {card_number} не короче 10 символов.")
     if len(card_number) >= 10:
 
-        logging.info(f'Номер карты {card_number} прошел проверку.')
+        logging.info(f"Номер карты {card_number} прошел проверку.")
         return card_number[0:4] + " " + card_number[4:6] + "** **** " + card_number[-4:]
 
-    logging.info(f'Номер карты {card_number} слишком короткий.')
+    logging.info(f"Номер карты {card_number} слишком короткий.")
     return ""
 
 
@@ -29,14 +32,15 @@ def get_mask_account(number: str) -> str:
     """
     card_number = number.replace(" ", "")
 
-    logging.info(f'Проверяем, что номер счета {card_number} не короче 10 символов.')
+    logging.info(f"Проверяем, что номер счета {card_number} не короче 10 символов.")
     if len(card_number) >= 10:
 
-        logging.info(f'Номер счета {card_number} прошел проверку.')
+        logging.info(f"Номер счета {card_number} прошел проверку.")
         return "**" + number[-4:]
 
-    logging.info(f'Номер счета {card_number} слишком короткий.')
+    logging.info(f"Номер счета {card_number} слишком короткий.")
     return ""
+
 
 print(get_mask_card_number("432465278568321424"))
 print(get_mask_account("532465378154632857318"))

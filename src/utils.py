@@ -1,13 +1,16 @@
 import json
-import os
 import logging
+import os
 
 from config import PATH_HOME
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(filename)s - %(levelname)s: %(message)s',
-                    filename='../logs/utils.log',  # запись логов в файл
-                    filemode='w')  # перезапись файла при каждом запуске
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(filename)s - %(levelname)s: %(message)s",
+    filename="../logs/utils.log",  # запись логов в файл
+    filemode="w",
+)  # перезапись файла при каждом запуске
+
 
 def get_transactions(path_name: str) -> list:
     """
@@ -31,5 +34,6 @@ def get_transactions(path_name: str) -> list:
 
     logging.info("Файл прошел проверку.")
     return converted_data
+
 
 print(get_transactions("data/operations.json"))
