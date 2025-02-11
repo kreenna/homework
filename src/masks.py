@@ -40,7 +40,3 @@ def get_mask_account(number: str) -> str:
 
     logging.info(f"Номер счета {card_number} слишком короткий.")
     return ""
-
-
-print(get_mask_card_number("432465278568321424"))
-print(get_mask_account("532465378154632857318"))

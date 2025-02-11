@@ -29,11 +29,8 @@ def get_transactions(path_name: str) -> list:
 
     except Exception as error:  # любые ошибки с файлом
 
-        logging.info(f"Произошла ошибка при обработке файла: {error}.")
+        logging.error(f"Произошла ошибка при обработке файла: {error}.")
         return []
 
     logging.info("Файл прошел проверку.")
     return converted_data
-
-
-print(get_transactions("data/operations.json"))
