@@ -1,3 +1,5 @@
+from src.utils import get_transactions
+
 # Homework
 
 Домашнее задание для Skypro
@@ -20,6 +22,29 @@
 ## Тестирование
 
 Все функции были протестированы, работают.
+
+## Обработка файлов
+
+Созданы функции для обработки файлов json, csv и xlsx. 
+
+Примеры использования функций:
+
+```python
+from src.utils import get_transactions
+from src.converting import get_csv, get_excel
+
+# Пример использования get_transactions
+path_json = "data/file.json"
+converted_json_file = get_transactions(path_json)
+
+# Пример использования get_csv
+path_csv = "data/file.csv"
+converted_csv_file = get_csv(path_csv)
+
+# Пример использования get_excel
+path_excel = "data/file.xlsx"
+converted_excel_file = get_excel(path_excel)
+```
 
 ## Генераторы 
 
