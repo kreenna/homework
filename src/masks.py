@@ -1,6 +1,7 @@
 import logging
-from config import PATH_HOME
 import os
+
+from config import PATH_HOME
 
 # настройки логгера
 logging.basicConfig(
@@ -8,7 +9,7 @@ logging.basicConfig(
     format="%(asctime)s - %(filename)s - %(levelname)s: %(message)s",
     filename=os.path.join(PATH_HOME, "logs/masks.log"),  # запись логов в файл
     filemode="w",
-    encoding='utf-8',
+    encoding="utf-8",
 )  # перезапись файла при каждом запуске
 
 

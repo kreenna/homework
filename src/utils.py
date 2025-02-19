@@ -9,7 +9,7 @@ logging.basicConfig(
     format="%(asctime)s - %(filename)s - %(levelname)s: %(message)s",
     filename=os.path.join(PATH_HOME, "logs/utils.log"),  # запись логов в файл
     filemode="w",
-    encoding='utf-8',
+    encoding="utf-8",
 )  # перезапись файла при каждом запуске
 
 

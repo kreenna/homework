@@ -1,10 +1,8 @@
-from six import Iterator
-
 from src.converting import get_csv, get_excel
-from src.generators import filter_by_currency, transaction_descriptions
-from src.processing import filter_by_state, sort_by_date, filter_by_description
+from src.generators import filter_by_currency
+from src.processing import filter_by_description, filter_by_state, sort_by_date
 from src.utils import get_transactions
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
 
 
 def main() -> None:
@@ -78,7 +76,6 @@ def main() -> None:
         else:
             print(f'Статус операции "{user_state}" недоступен. Попробуйте ещё раз.')
 
-    print(transactions)
     # сортировка по дате
     user_sort = input(
         """Отсортировать операции по дате? Да/Нет:
@@ -113,7 +110,7 @@ def main() -> None:
             """
         )
         transactions = filter_by_description(transactions, search_word)
-
+    print(transactions)
     # вывод итогового списка транзакций
     print("Распечатываю итоговый список транзакций...")
 
@@ -123,18 +120,13 @@ def main() -> None:
         # форматируем транзакции
         for transaction in transactions:
             date: str = get_date(transaction["date"])
-            description: Iterator = transaction_descriptions(transaction)
-            card_from: str = mask_account_card(transaction["from"])
-            card_to: str = mask_account_card(transaction["to"])
+            description: str = transaction.get("description")
+            card_from: str = mask_account_card(transaction.get("from"))
+            card_to: str = mask_account_card(transaction.get("to"))
             transaction_sum: str = transaction["operationAmount"]["amount"]
-            currency: str = transaction["operationAmount"]["amount"]["currency"]["name"]
+            currency: str = transaction["operationAmount"]["currency"]["name"]
 
-            print(
-                f"""{date}, {description}
-            {card_from}, -> {card_to}
-            Сумма: {transaction_sum} {currency}
-            """
-            )
+            print(f"{date}, {description}\n" f"{card_from} -> {card_to}\n" f"Сумма: {transaction_sum} {currency}\n")
 
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
