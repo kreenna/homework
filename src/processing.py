@@ -14,7 +14,7 @@ def filter_by_state(data: list, state: Optional[str] = "EXECUTED") -> list:
 
     needed_data: list = []
     for one in data:
-        if one["state"] == state:
+        if one.get("state") == state:
             needed_data.append(one)
     return needed_data
 
@@ -25,8 +25,13 @@ def sort_by_date(data: list, reverse_option: bool = True) -> list:
     Возвращает отсортированный список словарей.
     """
 
+    for entry in data:
+        date_value = entry.get("date")
+        if not date_value:
+            print(f"Potential Error found: {entry}")
+
     date: str = get_date(data[0]["date"])
-    if date == "":
+    if not date:
         return []
 
     sorted_data: list = sorted(data, key=lambda x: x["date"], reverse=reverse_option)
@@ -73,3 +78,21 @@ def count_transactions_categories(transaction_data: list, categories: list) -> d
     result = {category: description_counts.get(category, 0) for category in categories}
 
     return result
+
+
+print(sort_by_date([
+  {
+    "id": 441945886,
+    "state": "EXECUTED",
+    "date": "2019-08-26T10:50:58.294041",
+    "operationAmount": {
+      "amount": "31957.58",
+      "currency": {
+        "name": "руб.",
+        "code": "RUB"
+      }
+    },
+    "description": "Перевод организации",
+    "from": "Maestro 1596837868705199",
+    "to": "Счет 64686473678894779589"
+  }], True))

@@ -7,8 +7,9 @@ from config import PATH_HOME
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(filename)s - %(levelname)s: %(message)s",
-    filename="../logs/utils.log",  # запись логов в файл
+    filename=os.path.join(PATH_HOME, "logs/utils.log"),  # запись логов в файл
     filemode="w",
+    encoding='utf-8',
 )  # перезапись файла при каждом запуске
 
 
