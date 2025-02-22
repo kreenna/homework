@@ -1,6 +1,6 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import count_transactions_categories, filter_by_description, filter_by_state, sort_by_date
 
 
 @pytest.fixture
@@ -56,3 +56,58 @@ def test_filter_by_state(some_data: list, state: str, expected_id: str) -> None:
 def test_sort_by_date(data: list, descending: bool, expected_order: list) -> None:
     sorted_data = sort_by_date(data, descending)
     assert [item["date"] for item in sorted_data] == [item["date"] for item in expected_order]
+
+
+@pytest.fixture
+def transactions_data():
+    # Пример данных для использования в тестах
+    return [
+        {"description": "Перевод с карты на карту", "amount": 100},
+        {"description": "Открытие вклада", "amount": 500},
+        {"description": "Перевод с карты на карту", "amount": 200},
+        {"description": "Перевод организации", "amount": 300},
+        {"description": "Покупка в магазине", "amount": 50},
+    ]
+
+
+def test_filter_by_description(transactions_data):
+    # поиск по существующей строке
+    result = filter_by_description(transactions_data, "карты")
+    assert len(result) == 1
+    assert result[0]["description"] == "Перевод с карты на карту"
+
+    # поиск по несуществующей строке
+    result = filter_by_description(transactions_data, "несуществующая строка")
+    assert len(result) == 0
+
+    # пустой список транзакций
+    result = filter_by_description([], "карты")
+    assert len(result) == 0
+
+    # пустая строка для поиска
+    result = filter_by_description(transactions_data, "")
+    assert len(result) == 0
+
+    # None в качестве строки поиска
+    result = filter_by_description(transactions_data, None)
+    assert len(result) == 0
+
+
+def test_count_transactions_categories(transactions_data):
+    # проверка с существующими категориями
+    categories = ["Перевод с карты на карту", "Открытие вклада", "Перевод организации"]
+    result = count_transactions_categories(transactions_data, categories)
+    expected_result = {"Перевод с карты на карту": 2, "Открытие вклада": 1, "Перевод организации": 1}
+    assert result == expected_result
+
+    # проверка с несуществующими категориями
+    categories = ["Несуществующая категория", "Еще одна"]
+    result = count_transactions_categories(transactions_data, categories)
+    expected_result = {"Несуществующая категория": 0, "Еще одна": 0}
+    assert result == expected_result
+
+    # проверка с комбинацией существующих и несуществующих
+    categories = ["Перевод с карты на карту", "Несуществующая категория"]
+    result = count_transactions_categories(transactions_data, categories)
+    expected_result = {"Перевод с карты на карту": 2, "Несуществующая категория": 0}
+    assert result == expected_result
